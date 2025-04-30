@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Board.h"
 #include "Setup.h"
+#include "Spinner.h"
 using namespace std;
 
 int main() {
@@ -10,13 +11,14 @@ int main() {
     It is ran once, will likely implement game loop and run it again to reset the game.
     */
     Setup initialize;
+    Spinner spinner;
     initialize.setup();
-
+    int movements;
 
     srand(time(0));
     int turn = 0;
     int choice;
-    Board game(2);
+    Board game(2, initialize.pathChoice1, initialize.pathChoice2);
     while(turn <= 54) {
         game.displayBoard();
         //Place holder movement info
@@ -25,11 +27,15 @@ int main() {
         //When moving, will call a randomChance function, effects vary depending on advisor
         if (choice == 1) {
             //0 is player1, 1 is player2
-            game.movePlayer(0);
+            movements = spinner.spin();
+            cout << "You moved " << movements << endl;
+            game.movePlayer(0, movements);
             game.screenRewrite();
         }
         else if(choice == 2) {
-            game.movePlayer(1);
+            movements = spinner.spin();
+            cout << "You moved " << movements << endl;
+            game.movePlayer(1, movements);
             game.screenRewrite();
         }
         turn++;

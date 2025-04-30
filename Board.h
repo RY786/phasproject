@@ -11,16 +11,16 @@ private:
     int _player_count;
     int _player_position[_MAX_PLAYERS];
     void displayTile(int player_index, int pos);
-    void initializeTiles(int player_index);
+    void initializeTiles(int player_index, int path);
     bool isPlayerOnTile(int player_index, int pos);
 public:
     Board();
-    Board(int player_count);
+    Board(int player_count, int path1, int path2);
     void displayTrack(int player_index);
-    void initializeBoard();
+    void initializeBoard(int path1, int path2);
     void displayBoard();
     void screenRewrite();
-    bool movePlayer(int player_index);
+    bool movePlayer(int player_index, int movements);
     int getPlayerPosition(int player_index) const;
 };
 #endif

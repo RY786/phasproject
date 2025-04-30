@@ -10,14 +10,14 @@ using namespace std;
 #define BROWN "\033[48;2;139;69;19m"
 #define PURPLE "\033[48;2;128;0;128m"
 #define ORANGE "\033[48;2;230;115;0m" /* Orange (230,115,0) */
-#define GREY "\033[48;2;128;128;128m" /* Grey (128,128,128) */
+#define WHITE "\033[48;2;255;255;255m" /* White (0,0,0) */
+#define DARK_GREY "\033[48;2;64;64;64m" /* Dark Grey (64,64,64) */
 #define RESET "\033[0m"
 
-void Board::initializeBoard() {
+void Board::initializeBoard(int path1, int path2) {
     // Seed random number generator in your main function once
-    for (int i = 0; i < 2; i++) {
-        initializeTiles(i); // This ensures each lane has a unique tile distribution
-    }
+    initializeTiles(0, path1);
+    initializeTiles(1, path2);
 }
 
 void Board::screenRewrite() {
@@ -27,23 +27,22 @@ void Board::screenRewrite() {
     printf("\033[%d;%dH", 0, 0);
 }
 
-void Board::initializeTiles(int player_index) {
+void Board::initializeTiles(int player_index, int path) {
     Tile temp;
-    int lane = 0;
     int green_count = 0;
     int total_tiles = _BOARD_SIZE;
     int randNum = rand() % 100;
 
     //Straight to Tanglewood Drive
-    if(lane == 0) {
+    if(path == 1) {
         for (int i = 0; i < total_tiles; i++) {
             if (i == total_tiles - 1) {
                 // Set the last tile as Orange for pride rock
                 temp.color = 'O';
             }
             else if (i == 0) {
-                // Set the initial tile as Grey
-                temp.color = 'Y'; 
+                // Set the initial tile as White
+                temp.color = 'W'; 
             }
             else if (green_count < 20 && (rand() % (total_tiles - i) < 20 - green_count)) {
                 //Ensure that there are at least 20 green tiles whilst still be randomly placed
@@ -62,7 +61,7 @@ void Board::initializeTiles(int player_index) {
                 if(i < 27) {
                     if(randNum < 25) {
                         temp.tileType = "Graveyard";
-                        temp.color = 'Y';
+                        temp.color = 'X';
                     }
                     else if(randNum < 50) {
                         temp.tileType = "Hyena";
@@ -72,7 +71,7 @@ void Board::initializeTiles(int player_index) {
                 else {
                     if(randNum < 15) {
                         temp.tileType = "Graveyard";
-                        temp.color = 'Y';
+                        temp.color = 'X';
                     }
                     else if(randNum < 30) {
                         temp.tileType = "Hyena";
@@ -110,8 +109,8 @@ void Board::initializeTiles(int player_index) {
                 temp.color = 'O';
             }
             else if (i == 0) {
-                // Set the initial tile as Grey for "Pride Rock"
-                temp.color = 'Y'; 
+                // Set the initial tile as white
+                temp.color = 'W'; 
             }
             else if (green_count < 30 && (rand() % (total_tiles - i) < 30 - green_count)) {
                 //Ensure that there are at least 20 green tiles whilst still be randomly placed
@@ -137,7 +136,7 @@ void Board::initializeTiles(int player_index) {
                 randNum = rand() % 100;
                 if(randNum < 25) {
                     temp.tileType = "Graveyard";
-                    temp.color = 'Y';
+                    temp.color = 'X';
                 }
                 else if(randNum < 50) {
                     temp.tileType = "Hyena";
@@ -174,7 +173,7 @@ void Board::initializeTiles(int player_index) {
 Board::Board() {
     //initalization
 }
-Board::Board(int player_count) {
+Board::Board(int player_count, int path1, int path2) {
     if (player_count > _MAX_PLAYERS) {
         _player_count = _MAX_PLAYERS;
     }
@@ -186,7 +185,7 @@ Board::Board(int player_count) {
         _player_position[i] = 0;
     }
     // Initialize tiles
-    initializeBoard();
+    initializeBoard(path1, path2);
 }
 bool Board::isPlayerOnTile(int player_index, int pos) {
     if (_player_position[player_index] == pos) {
@@ -228,10 +227,13 @@ void Board::displayTile(int player_index, int pos) {
     {
     color = ORANGE;
     }
-    else if (_tiles[player_index][pos].color == 'Y')
+    else if (_tiles[player_index][pos].color == 'W')
     {
-    color = GREY;
+    color = WHITE;
     }
+    else if (_tiles[player_index][pos].color == 'X') {
+        color = DARK_GREY;
+    } 
     if (player == true)
     {
     cout << color << "|" << (player_index + 1) << "|" << RESET;
@@ -256,9 +258,9 @@ void Board::displayBoard() {
         }
     }
 }
-bool Board::movePlayer(int player_index) {
+bool Board::movePlayer(int player_index, int movements) {
 // Increment player position
-    _player_position[player_index]++;
+    _player_position[player_index] += movements;
     if (_player_position[player_index] == _BOARD_SIZE - 1) {
     // Player reached last tile
         return true;

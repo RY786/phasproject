@@ -116,5 +116,39 @@ void Setup::setup() {
         //etc.
     }
 
+    //Write stuff here to take in chosen paths and then funnel them to the Board generation 
+    cout << player2Name << ", choose your path wisely:\n"
+     << " (1) Tanglewood Dr\n"
+     << " (2) Abandoned High School\n";
+    cin >> pathChoice2;
 
+    while (pathChoice2 != 1 && pathChoice2 != 2) {
+        cout << "Invalid choice: Please choose (1) or (2): ";
+        cin >> pathChoice2;
+    }
+    if(pathChoice2 == 1) {
+        cout << "You chose Tanglewood Dr \n +100 Phaspoints \n No starting advisor" << endl;
+        //+100 phaspoints
+        char2.addPhaspoints(100);
+        
+        //etc.
+        //select advisor dialogue:
+        
+
+    }
+    else if(pathChoice2 == 2) {
+        cout << "You chose Abandoned High School \n -100 Phaspoints \n You get a starting advisor" << endl;
+        //-100 Phaspoints
+        char2.addPhaspoints(-100);
+        advisorInformation();
+        cout << endl << "Choose a starting advisor from the list above" << endl;
+        int advisorChoice2;
+        cin >> advisorChoice2;
+        while(advisorChoice2 < 1 || advisorChoice2 > 5) {
+            cout << "Invalid choice: Please choose 1-5: ";
+            cin >> pathChoice1;
+        }
+        Advisor advisor2(advisorChoice2);
+        //etc.
+    }
 }
