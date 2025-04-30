@@ -5,14 +5,23 @@
 #include "Setup.h"
 #include "Board.h"
 #include "Character.h"
+#include "Advisor.h"
 
 using namespace std;
 using namespace chrono;
 using namespace this_thread;
 
+void advisorInformation() {
+    ifstream advisors("advisor.txt");
+    string advisorText;
+    while(getline(advisors, advisorText)) {
+        cout << advisorText << endl;
+    }
+}
+
 void Setup::setup() {
     Board f;
-
+    /*
     cout << "Welcome to the Circle of Death!" << endl;
     sleep_for(seconds(3));
 
@@ -31,7 +40,7 @@ void Setup::setup() {
     cout << "Navigate wisely, may the best win..." << endl;
     sleep_for(seconds(3));
     f.screenRewrite();
-
+    */
 
 
     //Print out the contents of "characters.txt"
@@ -72,29 +81,38 @@ void Setup::setup() {
 
 
     //Write stuff here to take in chosen paths and then funnel them to the Board generation 
-    cout << player1Name << ", choose your path wisely: \n (1) Tanglewood Dr \n (2) Abandonded High School" << endl;
+    cout << player1Name << ", choose your path wisely:\n"
+     << " (1) Tanglewood Dr\n"
+     << " (2) Abandoned High School\n";
     cin >> pathChoice1;
-    bool valid = false;
-    while(valid) {
+
+    while (pathChoice1 != 1 && pathChoice1 != 2) {
         cout << "Invalid choice: Please choose (1) or (2): ";
         cin >> pathChoice1;
-        if(pathChoice1 == 1 || pathChoice1 == 2) {
-            valid = true;
-        }
     }
     if(pathChoice1 == 1) {
         cout << "You chose Tanglewood Dr \n +100 Phaspoints \n No starting advisor" << endl;
         //+100 phaspoints
         char1.addPhaspoints(100);
+        
         //etc.
         //select advisor dialogue:
+        
 
     }
     else if(pathChoice1 == 2) {
         cout << "You chose Abandoned High School \n -100 Phaspoints \n You get a starting advisor" << endl;
         //-100 Phaspoints
         char1.addPhaspoints(-100);
-
+        advisorInformation();
+        cout << endl << "Choose a starting advisor from the list above" << endl;
+        int advisorChoice1;
+        cin >> advisorChoice1;
+        while(advisorChoice1 < 1 || advisorChoice1 > 5) {
+            cout << "Invalid choice: Please choose 1-5: ";
+            cin >> pathChoice1;
+        }
+        Advisor advisor1(advisorChoice1);
         //etc.
     }
 

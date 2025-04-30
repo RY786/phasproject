@@ -4,6 +4,7 @@
 
 using namespace std;
 
+
 Advisor::Advisor(int advisorNum) {
     switch (advisorNum) {
         case 1: // THE SEER
@@ -28,10 +29,3 @@ Advisor::Advisor(int advisorNum) {
 }
 
 //general funcs
-void Advisor::displayAdvisors() {
-    ifstream advisors("advisor.txt");
-    string advisorText;
-    while(getline(advisors, advisorText)) {
-        cout << advisorText << endl;
-    }
-}
