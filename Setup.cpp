@@ -6,6 +6,8 @@
 #include "Board.h"
 #include "Character.h"
 #include "Advisor.h"
+#include "Tile.h"
+#include "Spinner.h"
 
 using namespace std;
 using namespace chrono;
@@ -20,7 +22,7 @@ void advisorInformation() {
 }
 
 void Setup::setup() {
-    Board f;
+    Board game(2, pathChoice1, pathChoice2);
     /*
     cout << "Welcome to the Circle of Death!" << endl;
     sleep_for(seconds(3));
@@ -49,10 +51,10 @@ void Setup::setup() {
     int player1, player2;
     cout << "PLAYER 1: What's your name?: ";
     cin >> player1Name;
-    f.screenRewrite();
+    game.screenRewrite();
     cout << "PLAYER 2: What's your name?: ";
     cin >> player2Name;
-    f.screenRewrite();
+    game.screenRewrite();
     while(getline(characters, characterText)) {
         cout << characterText << endl;
     }
@@ -60,7 +62,7 @@ void Setup::setup() {
     cin >> player1;
     Character char1(player1);
     char1.printDescription(player1);
-    sleep_for(seconds(3));
+   // sleep_for(seconds(3));
 
     cout << "PLAYER 2: Choose your character (1-5): ";
     cin >> player2;
@@ -70,8 +72,8 @@ void Setup::setup() {
     }
     Character char2(player2);
     char2.printDescription(player2);
-    sleep_for(seconds(5));
-    f.screenRewrite();
+    //sleep_for(seconds(5));
+    game.screenRewrite();
     cout << "Now, each player with choose a path. There are two paths available: Tanglewood Dr and Abandonded High School." << endl;
     cout << "Tanglewood Dr is the more challenging path with more obstacles on the way, but you will earn additional Phaspoints." << endl;
     cout << endl;
@@ -133,8 +135,6 @@ void Setup::setup() {
         
         //etc.
         //select advisor dialogue:
-        
-
     }
     else if(pathChoice2 == 2) {
         cout << "You chose Abandoned High School \n -100 Phaspoints \n You get a starting advisor" << endl;
@@ -151,4 +151,74 @@ void Setup::setup() {
         Advisor advisor2(advisorChoice2);
         //etc.
     }
+    game.screenRewrite();
+
+    Spinner spinner;
+    Tile tile;
+    
+    int movements;
+    int turn = 0;
+    int choice;
+    char currentTile;
+    bool isP1Turn = true;
+    string moveOn;
+    srand(time(0));
+
+    while(turn <= 54) {
+        game.displayBoard();
+        //Place holder movement info
+        cout << "Press 1 and ENTER to make your move" << endl;
+        cin >> choice; 
+        while(choice != 1) {
+            cout << "Please enter '1' to cast out your move: ";
+            cin >> choice;
+        }
+        //When moving, will call a randomChance function, effects vary depending on advisor
+        if(isP1Turn) {  
+            if (choice == 1) {
+                //0 is player1, 1 is player2
+                movements = spinner.spin();
+                game.movePlayer(0, movements);
+                game.screenRewrite();
+                cout << player1Name << "'s move!" << endl;
+                cout << "You moved " << movements << " spaces." << endl;
+                cout << "POS: " << game.getPlayerPosition(0) << endl;
+                currentTile = game.getTileInfo(game.getPlayerPosition(0));
+                cout << "Current Tile Type: " << currentTile << endl;
+                char1 = tile.tileAttributes(char1, currentTile);
+
+                cout << char1.getStamina() << endl;
+                if(currentTile == 'A') {
+                    cout << "You get an extra turn!" << endl;
+                }
+                else {
+                    isP1Turn = false;
+                }
+
+            }
+        }
+        else {
+            if (choice == 1) {
+                movements = spinner.spin();
+                game.movePlayer(1, movements);
+                game.screenRewrite();
+                cout << player2Name << "'s move!" << endl;
+                cout << "You moved " << movements << " spaces." << endl;
+                cout << "POS: " << game.getPlayerPosition(1) << endl;
+                currentTile = game.getTileInfo(game.getPlayerPosition(1));
+                cout << "Current Tile Type: " << currentTile << endl;
+                char2 = tile.tileAttributes(char2, currentTile);
+                cout << char2.getStamina() << endl;
+                if(currentTile == 'A') {
+                    cout << "You get an extra turn!" << endl;
+                }
+                else {
+                    isP1Turn = true;
+                }
+
+            }
+        }
+        turn++;
+    }
+
 }

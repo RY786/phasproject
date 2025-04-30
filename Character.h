@@ -16,6 +16,7 @@ private:
 
 public:
     //cnstrct
+    Character();
     Character(int character);
 
     //get

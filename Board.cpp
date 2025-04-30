@@ -15,7 +15,6 @@ using namespace std;
 #define RESET "\033[0m"
 
 void Board::initializeBoard(int path1, int path2) {
-    // Seed random number generator in your main function once
     initializeTiles(0, path1);
     initializeTiles(1, path2);
 }
@@ -25,6 +24,10 @@ void Board::screenRewrite() {
     //From: https://stackoverflow.com/questions/47340610/c-overwrite-multiple-lines-that-were-previously-output-to-console
     printf("\033[2J");
     printf("\033[%d;%dH", 0, 0);
+}
+
+char Board::getTileInfo(int pos) {
+    return _tiles[0][pos].tileType;
 }
 
 void Board::initializeTiles(int player_index, int path) {
@@ -38,14 +41,17 @@ void Board::initializeTiles(int player_index, int path) {
         for (int i = 0; i < total_tiles; i++) {
             if (i == total_tiles - 1) {
                 // Set the last tile as Orange for pride rock
+                temp.tileType = 'F';
                 temp.color = 'O';
             }
             else if (i == 0) {
                 // Set the initial tile as White
+                temp.tileType = 'I';
                 temp.color = 'W'; 
             }
             else if (green_count < 20 && (rand() % (total_tiles - i) < 20 - green_count)) {
                 //Ensure that there are at least 20 green tiles whilst still be randomly placed
+                temp.tileType = 'G';
                 temp.color = 'G'; //lowercase g for green 
                 green_count++;
             }
@@ -54,45 +60,45 @@ void Board::initializeTiles(int player_index, int path) {
                 //Random assignment of the special tiles
                 randNum = rand() % 100;
                 if(randNum < 25) {
-                    temp.tileType = "Challenge";
+                    temp.tileType = 'C'; //Challenge tile
                     temp.color = 'R';
                 }
                 randNum = rand() % 100;
                 if(i < 27) {
                     if(randNum < 25) {
-                        temp.tileType = "Graveyard";
+                        temp.tileType = 'S'; //salt trap
                         temp.color = 'X';
                     }
                     else if(randNum < 50) {
-                        temp.tileType = "Hyena";
+                        temp.tileType = 'B'; //binding 
                         temp.color = 'U';
                     }
                 }
                 else {
                     if(randNum < 15) {
-                        temp.tileType = "Graveyard";
+                        temp.tileType = 'S';
                         temp.color = 'X';
                     }
                     else if(randNum < 30) {
-                        temp.tileType = "Hyena";
-                        temp.color = 'N';
+                        temp.tileType = 'B';
+                        temp.color = 'U';
                     }
                 }
                 randNum = rand() % 100;
                 if(randNum < 20) {
-                    temp.tileType = "Advisor";
+                    temp.tileType = 'A';
                     temp.color = 'P';
                 }
                 randNum = rand() % 100;
                 if(i < 27) {
                     if(randNum < 5) {
-                        temp.tileType = "Oasis";
+                        temp.tileType = 'R';
                         temp.color = 'B';
                     }
                 }
                 else {
                     if(randNum < 25) {
-                        temp.tileType = "Oasis";
+                        temp.tileType = 'R';
                         temp.color = 'B';
                     }
                 }
@@ -106,14 +112,17 @@ void Board::initializeTiles(int player_index, int path) {
         for (int i = 0; i < total_tiles; i++) {
             if (i == total_tiles - 1) {
                 // Set the last tile as Orange for "Pride Rock"
+                temp.tileType = 'F';
                 temp.color = 'O';
             }
             else if (i == 0) {
                 // Set the initial tile as white
+                temp.tileType = 'I';
                 temp.color = 'W'; 
             }
             else if (green_count < 30 && (rand() % (total_tiles - i) < 30 - green_count)) {
                 //Ensure that there are at least 20 green tiles whilst still be randomly placed
+                temp.tileType = 'G';
                 temp.color = 'G'; 
                 green_count++;
             }
@@ -123,40 +132,40 @@ void Board::initializeTiles(int player_index, int path) {
                 randNum = rand() % 100;
                 if(i < 27) {
                     if(randNum < 20) {
-                    temp.tileType = "Challenge";
+                    temp.tileType = 'C'; //C = Challenge
                     temp.color = 'R';
                     }
                 }
                 else {
                     if(randNum < 30) {
-                        temp.tileType = "Challenge";
+                        temp.tileType = 'C'; //C = Challenge
                         temp.color = 'R';
                     }
                 }
                 randNum = rand() % 100;
                 if(randNum < 25) {
-                    temp.tileType = "Graveyard";
+                    temp.tileType = 'S'; //Salt trap
                     temp.color = 'X';
                 }
                 else if(randNum < 50) {
-                    temp.tileType = "Hyena";
-                    temp.color = 'N';
+                    temp.tileType = 'B'; //Binding
+                    temp.color = 'U';
                 }
                 randNum = rand() % 100;
                 if(randNum < 15) {
-                    temp.tileType = "Advisor";
+                    temp.tileType = 'A'; //A = advisor tile
                     temp.color = 'P';
                 }
                 randNum = rand() % 100;
                 if(i < 27) {
                     if(randNum < 25) {
-                        temp.tileType = "Oasis";
+                        temp.tileType = 'R'; //R = Rest Tile
                         temp.color = 'B';
                     }
                 }
                 else {
                     if(randNum < 15) {
-                        temp.tileType = "Oasis";
+                        temp.tileType = 'R'; //R = rest tile
                         temp.color = 'B';
                     }
                 }

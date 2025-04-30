@@ -4,6 +4,10 @@
 using namespace std;
 
 //constrcutor
+
+Character::Character() {
+}
+
 Character::Character(int character) {
     switch (character) {
         case 1: // DEOGEN
@@ -88,19 +92,19 @@ int Character::getPhaspoints() const {
 
 //setters
 void Character::setAge(int newAge) {
-    age = newAge;
+    age += newAge;
 }
 
 void Character::setStrength(int newStrength) {
-    strength = newStrength;
+    strength += newStrength;
 }
 
 void Character::setStamina(int newStamina) {
-    stamina = newStamina;
+    stamina += newStamina;
 }
 
 void Character::setWisdom(int newWisdom) {
-    wisdom = newWisdom;
+    wisdom += newWisdom;
 }
 
 void Character::addPhaspoints(int newPhaspoints) {
