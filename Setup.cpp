@@ -155,11 +155,13 @@ void Setup::setup() {
 
     Spinner spinner;
     Tile tile;
+    Tile tile2;
     
     int movements;
     int turn = 0;
     int choice;
-    char currentTile;
+    char currentTile1;
+    char currentTile2;
     bool isP1Turn = true;
     string moveOn;
     srand(time(0));
@@ -181,14 +183,14 @@ void Setup::setup() {
                 game.movePlayer(0, movements);
                 game.screenRewrite();
                 cout << player1Name << "'s move!" << endl;
-                cout << "You moved " << movements << " spaces." << endl;
-                cout << "POS: " << game.getPlayerPosition(0) << endl;
-                currentTile = game.getTileInfo(game.getPlayerPosition(0));
-                cout << "Current Tile Type: " << currentTile << endl;
-                char1 = tile.tileAttributes(char1, currentTile);
+                cout << "You moved [" << movements << "] spaces | " << "Current position: " << game.getPlayerPosition(0) << endl;
+                currentTile1 = game.getTileInfo(game.getPlayerPosition(0), 0);
+                char1 = tile.tileAttributes(char1, currentTile1);
 
-                cout << char1.getStamina() << endl;
-                if(currentTile == 'A') {
+                cout << "[STATS] 💪 STR: " << char1.getStrength() 
+                    << " | ⚡ STA: " << char1.getStamina() 
+                    << " | 🧠 WIS: " << char1.getWisdom() << endl;
+                if(currentTile1 == 'R') {
                     cout << "You get an extra turn!" << endl;
                 }
                 else {
@@ -203,13 +205,14 @@ void Setup::setup() {
                 game.movePlayer(1, movements);
                 game.screenRewrite();
                 cout << player2Name << "'s move!" << endl;
-                cout << "You moved " << movements << " spaces." << endl;
-                cout << "POS: " << game.getPlayerPosition(1) << endl;
-                currentTile = game.getTileInfo(game.getPlayerPosition(1));
-                cout << "Current Tile Type: " << currentTile << endl;
-                char2 = tile.tileAttributes(char2, currentTile);
-                cout << char2.getStamina() << endl;
-                if(currentTile == 'A') {
+                cout << "You moved " << movements << " spaces." << "Current position: " << game.getPlayerPosition(1) << endl;
+                currentTile2 = game.getTileInfo(game.getPlayerPosition(1), 1);
+                char2 = tile2.tileAttributes(char2, currentTile2);
+                cout << "[STATS] 💪 STR: " << char2.getStrength() 
+                    << " | ⚡ STA: " << char2.getStamina() 
+                    << " | 🧠 WIS: " << char2.getWisdom() << endl;   
+                               
+                if(currentTile2 == 'R') {
                     cout << "You get an extra turn!" << endl;
                 }
                 else {

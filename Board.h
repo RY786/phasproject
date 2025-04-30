@@ -22,7 +22,7 @@ public:
     void screenRewrite();
     bool movePlayer(int player_index, int movements);
     int getPlayerPosition(int player_index) const;
-    char getTileInfo(int pos);
+    char getTileInfo(int pos, int player_index);
 };
 #endif
 

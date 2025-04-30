@@ -26,8 +26,8 @@ void Board::screenRewrite() {
     printf("\033[%d;%dH", 0, 0);
 }
 
-char Board::getTileInfo(int pos) {
-    return _tiles[0][pos].tileType;
+char Board::getTileInfo(int pos, int player_index) {
+    return _tiles[player_index][pos].tileType;
 }
 
 void Board::initializeTiles(int player_index, int path) {
