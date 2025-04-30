@@ -103,8 +103,8 @@ void Character::setWisdom(int newWisdom) {
     wisdom = newWisdom;
 }
 
-void Character::setPhaspoints(int newPhaspoints) {
-    phaspoints = newPhaspoints;
+void Character::addPhaspoints(int newPhaspoints) {
+    phaspoints += newPhaspoints;
 }
 
 //general functions 

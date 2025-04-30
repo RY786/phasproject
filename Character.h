@@ -31,7 +31,7 @@ public:
     void setStrength(int newStrength);
     void setStamina(int newStamina);
     void setWisdom(int newWisdom);
-    void setPhaspoints(int newPhaspoints);
+    void addPhaspoints(int newPhaspoints);
 
     //info funcs
     void displayStats() const;

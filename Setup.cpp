@@ -63,18 +63,39 @@ void Setup::setup() {
     char2.printDescription(player2);
     sleep_for(seconds(5));
     f.screenRewrite();
+    cout << "Now, each player with choose a path. There are two paths available: Tanglewood Dr and Abandonded High School." << endl;
+    cout << "Tanglewood Dr is the more challenging path with more obstacles on the way, but you will earn additional Phaspoints." << endl;
+    cout << endl;
+    cout << "Abandonded High School is the easier choice, and you will have an expert ghost advisor to help you along the way immediately, at the cost of Phaspoints." << endl;
+    cout << "There will be a decrease in obstacles as well, but remember you have an initial setback with your points" << endl;
+    cout << endl;
+
+
     //Write stuff here to take in chosen paths and then funnel them to the Board generation 
-    if(pathChoice == 1) {
-        //-5,000 Pride Point
-        //etc.
-
-        //select advisor dialogue:
+    cout << player1Name << ", choose your path wisely: \n (1) Tanglewood Dr \n (2) Abandonded High School" << endl;
+    cin >> pathChoice1;
+    bool valid = false;
+    while(valid) {
+        cout << "Invalid choice: Please choose (1) or (2): ";
+        cin >> pathChoice1;
+        if(pathChoice1 == 1 || pathChoice1 == 2) {
+            valid = true;
+        }
     }
-    if(pathChoice == 2) {
-        //+5,000 Pride Points
+    if(pathChoice1 == 1) {
+        cout << "You chose Tanglewood Dr \n +100 Phaspoints \n No starting advisor" << endl;
+        //+100 phaspoints
+        char1.addPhaspoints(100);
         //etc.
+        //select advisor dialogue:
 
-        
+    }
+    else if(pathChoice1 == 2) {
+        cout << "You chose Abandoned High School \n -100 Phaspoints \n You get a starting advisor" << endl;
+        //-100 Phaspoints
+        char1.addPhaspoints(-100);
+
+        //etc.
     }
 
 

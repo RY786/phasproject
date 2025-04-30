@@ -38,11 +38,11 @@ void Board::initializeTiles(int player_index) {
     if(lane == 0) {
         for (int i = 0; i < total_tiles; i++) {
             if (i == total_tiles - 1) {
-                // Set the last tile as Orange for "Pride Rock"
+                // Set the last tile as Orange for pride rock
                 temp.color = 'O';
             }
             else if (i == 0) {
-                // Set the initial tile as Grey for "Pride Rock"
+                // Set the initial tile as Grey
                 temp.color = 'Y'; 
             }
             else if (green_count < 20 && (rand() % (total_tiles - i) < 20 - green_count)) {
