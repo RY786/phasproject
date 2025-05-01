@@ -15,10 +15,12 @@ public:
 
     //get
     string getName() const;
+    int getNum(string name) const;
 
     //info funcs
     void displayAdvisors();
     void displayStats() const;
+    int applyEffects(int advisorNum);
 };
 
 #endif // CHARACTER_H

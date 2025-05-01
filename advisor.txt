@@ -1,5 +1,5 @@
-1) The Seer: Reveals one upcoming danger on the board, allowing the ghost to avoid it early.
-2) The Warden: Grants immunity to one trap (e.g. salt circle or crucifix), shielding the ghost.
-3) The Whisperer: Silences noise briefly, letting the ghost pass through a high-risk area undetected.
-4) The Riftwalker: Teleports the ghost to a previously visited safe tile, skipping over obstacles.
-5) The Hollow Monk: Slows down enemy investigators for one turn, giving the ghost breathing room.
+1) The Seer: Grants +3 Wisdom.
+2) The Warden: Grants +5 Strength .
+3) The Whisperer: Grants +100 Phaspoints, lost if you swap advisors.
+4) The Riftwalker: Takes 100 Phaspoints, gain +6 Strength.
+5) The Hollow Monk: Grants +3 Stamina.
