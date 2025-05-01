@@ -16,7 +16,7 @@ Character::Character(int character) {
             strength = 3;
             stamina = 10;
             wisdom = 10;
-            phaspoints = 100;
+            phaspoints = 200;
             break;
         case 2: // MIMIC
             name = "Mimic";
@@ -24,7 +24,7 @@ Character::Character(int character) {
             strength = 6;
             stamina = 6;
             wisdom = 6;
-            phaspoints = 80;
+            phaspoints = 200;
             break;
         case 3: // SHADE
             name = "Shade";
@@ -32,7 +32,7 @@ Character::Character(int character) {
             strength = 2;
             stamina = 4;
             wisdom = 7;
-            phaspoints = 85;
+            phaspoints = 200;
             break;
         case 4: // JINN
             name = "Jinn";
@@ -40,7 +40,7 @@ Character::Character(int character) {
             strength = 8;
             stamina = 6;
             wisdom = 7;
-            phaspoints = 90;
+            phaspoints = 200;
             break;
         case 5: // HANTU
             name = "Hantu";
@@ -48,15 +48,15 @@ Character::Character(int character) {
             strength = 7;
             stamina = 5;
             wisdom = 4;
-            phaspoints = 70;
+            phaspoints = 200;
             break;
         case 6: // THAYE
             name = "Thaye";
             age = 5;
-            strength = 5;
+            strength = 7;
             stamina = 7;
-            wisdom = 3;
-            phaspoints = 60;
+            wisdom = 8;
+            phaspoints = 200;
             break;
         default:
             std::cout << "Invalid character selection!" << std::endl;

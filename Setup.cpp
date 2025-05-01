@@ -8,6 +8,7 @@
 #include "Advisor.h"
 #include "Tile.h"
 #include "Spinner.h"
+#include "Menu.h"
 
 using namespace std;
 using namespace chrono;
@@ -49,22 +50,28 @@ void Setup::setup() {
     ifstream characters("characters.txt");
     string characterText;
     int player1, player2;
+
     cout << "PLAYER 1: What's your name?: ";
     cin >> player1Name;
+
     game.screenRewrite();
+
     cout << "PLAYER 2: What's your name?: ";
     cin >> player2Name;
+
     game.screenRewrite();
+
     while(getline(characters, characterText)) {
         cout << characterText << endl;
     }
-    cout << "PLAYER 1: Choose your character (1-5)" << endl;
+    cout << "PLAYER 1: Choose your character (1-6)" << endl;
     cin >> player1;
     Character char1(player1);
     char1.printDescription(player1);
+
    // sleep_for(seconds(3));
 
-    cout << "PLAYER 2: Choose your character (1-5): ";
+    cout << "PLAYER 2: Choose your character (1-6): ";
     cin >> player2;
     while(player2 == player1) {
         cout << "Character already chosen! Please choose another character: " << endl;
@@ -72,7 +79,9 @@ void Setup::setup() {
     }
     Character char2(player2);
     char2.printDescription(player2);
+
     //sleep_for(seconds(5));
+
     game.screenRewrite();
     cout << "Now, each player with choose a path. There are two paths available: Tanglewood Dr and Abandonded High School." << endl;
     cout << "Tanglewood Dr is the more challenging path with more obstacles on the way, but you will earn additional Phaspoints." << endl;
@@ -92,6 +101,8 @@ void Setup::setup() {
         cout << "Invalid choice: Please choose (1) or (2): ";
         cin >> pathChoice1;
     }
+    Advisor advisor1(1);
+    Advisor advisor2(1);
     if(pathChoice1 == 1) {
         cout << "You chose Tanglewood Dr \n +100 Phaspoints \n No starting advisor" << endl;
         //+100 phaspoints
@@ -114,7 +125,9 @@ void Setup::setup() {
             cout << "Invalid choice: Please choose 1-5: ";
             cin >> pathChoice1;
         }
-        Advisor advisor1(advisorChoice1);
+        Advisor tempAdvisor(advisorChoice1);
+        advisor1 = tempAdvisor;
+        cout << advisor1.getName() << endl;
         //etc.
     }
 
@@ -148,14 +161,22 @@ void Setup::setup() {
             cout << "Invalid choice: Please choose 1-5: ";
             cin >> pathChoice1;
         }
-        Advisor advisor2(advisorChoice2);
+        Advisor temp2(advisorChoice2);
+        advisor2 = temp2;
+        cout << advisor2.getName() << endl;
         //etc.
     }
+    cout << "\nPress ENTER to start to the game...\n";
+    cin.ignore(); //flush newline
+    cin.get();    //wait for ENTER
+
+
     game.screenRewrite();
 
     Spinner spinner;
     Tile tile;
     Tile tile2;
+    Menu menu;
     
     int movements;
     int turn = 0;
@@ -167,22 +188,92 @@ void Setup::setup() {
     srand(time(0));
 
     while(turn <= 54) {
+        
+        game.screenRewrite();
+
+        if (isP1Turn) {
+            cout << "🎮 " << player1Name << "'s Turn 🎮\n\n";
+        } else {
+            cout << "🎮 " << player2Name << "'s Turn 🎮\n\n";
+        }
+        
         game.displayBoard();
-        //Place holder movement info
-        cout << "Press 1 and ENTER to make your move" << endl;
+        menu.menu();
+
         cin >> choice; 
-        while(choice != 1) {
-            cout << "Please enter '1' to cast out your move: ";
+        
+        //Checks to make sure that input is between 1 and 5
+        while(choice > 5 && choice <= 0) {
+            cout << "Please enter '1-5' to make a decision: ";
             cin >> choice;
         }
+        
+        //Displays submenu
+        if (choice == 2) {
+            //Show submenu after board + main menu
+            if(isP1Turn) {
+                menu.menu(2, "Temp", char1.getPhaspoints(), char1.getStrength(), char1.getWisdom(), char1.getStamina(), 0);
+
+            }
+            else {
+                menu.menu(2, "Temp", char2.getPhaspoints(), char2.getStrength(), char2.getWisdom(), char2.getStamina(), 0);
+            }
+            cout << "\nPress ENTER to return to the main menu...\n";
+            cin.ignore(); //flush newline
+            cin.get();    //wait for ENTER
+            continue;     //go back to top of loop to redraw screen/menu
+        }
+        if (choice == 3) {
+            //Show submenu after board + main menu
+            if(isP1Turn) {
+                menu.menu(3, char1.getName(), 0, 0, 0, 0, char1.getAge());
+
+            }
+            else {
+                menu.menu(3, char2.getName(), char2.getPhaspoints(), char2.getStrength(), char2.getWisdom(), char2.getStamina(), char2.getAge());
+            }
+            cout << "\nPress ENTER to return to the main menu...\n";
+            cin.ignore(); //flush newline
+            cin.get();    //wait for ENTER
+            continue;     //go back to top of loop to redraw screen/menu
+        }
+        if (choice == 4) {
+            //Show submenu after board + main menu
+            if(isP1Turn) {
+                menu.menu(5, "", game.getPlayerPosition(0), 0, 0, 0, 0);
+
+            }
+            else {
+                menu.menu(5, "", game.getPlayerPosition(0), 0, 0, 0, 0);
+            }
+            cout << "\nPress ENTER to return to the main menu...\n";
+            cin.ignore(); //flush newline
+            cin.get();    //wait for ENTER
+            continue;     //go back to top of loop to redraw screen/menu
+        }
+        if (choice == 5) {
+            //Show submenu after board + main menu
+            if(isP1Turn) {
+                menu.menu(4, advisor1.getName(), 0, 0, 0, 0, 0);
+
+            }
+            else {
+                menu.menu(4, advisor2.getName(), 0, 0, 0, 0, 0);
+            }
+            cout << "\nPress ENTER to return to the main menu...\n";
+            cin.ignore(); //flush newline
+            cin.get();    //wait for ENTER
+            continue;     //go back to top of loop to redraw screen/menu
+        }
+
         //When moving, will call a randomChance function, effects vary depending on advisor
         if(isP1Turn) {  
+
             if (choice == 1) {
                 //0 is player1, 1 is player2
                 movements = spinner.spin();
                 game.movePlayer(0, movements);
-                game.screenRewrite();
-                cout << player1Name << "'s move!" << endl;
+                //game.screenRewrite();
                 cout << "You moved [" << movements << "] spaces | " << "Current position: " << game.getPlayerPosition(0) << endl;
                 currentTile1 = game.getTileInfo(game.getPlayerPosition(0), 0);
                 char1 = tile.tileAttributes(char1, currentTile1);
@@ -198,13 +289,15 @@ void Setup::setup() {
                 }
 
             }
+            cout << "\nPress ENTER to continue...\n";
+            cin.ignore();
+            cin.get();
+
         }
         else {
             if (choice == 1) {
                 movements = spinner.spin();
                 game.movePlayer(1, movements);
-                game.screenRewrite();
-                cout << player2Name << "'s move!" << endl;
                 cout << "You moved " << movements << " spaces." << "Current position: " << game.getPlayerPosition(1) << endl;
                 currentTile2 = game.getTileInfo(game.getPlayerPosition(1), 1);
                 char2 = tile2.tileAttributes(char2, currentTile2);
@@ -219,7 +312,11 @@ void Setup::setup() {
                     isP1Turn = true;
                 }
 
+
             }
+            cout << "\nPress ENTER to continue...\n";
+            cin.ignore();
+            cin.get();
         }
         turn++;
     }

@@ -1,0 +1,8 @@
+🧭================================ RPG MENU ================================🧭
+|                                                                            |
+|  1. 🎲 Move Forward          – Spin the virtual spinner to take your turn. |
+|  2. 📍 Check Player Progress – Review Phaspoint & Leadership stats.        |
+|  3. 🧝 Review Character      – View your character's name and age.         |
+|  4. 🧭 Check Position        – Display current location information.       |
+|  5. 👑 Review Your Advisor   – See/Swap who your current advisor is.       |
+|____________________________________________________________________________| 

@@ -5,6 +5,10 @@
 using namespace std;
 
 
+Advisor::Advisor() {
+
+}
+
 Advisor::Advisor(int advisorNum) {
     switch (advisorNum) {
         case 1: // THE SEER
@@ -26,6 +30,10 @@ Advisor::Advisor(int advisorNum) {
             std::cout << "Invalid advisor selection!" << std::endl;
             break;
     }
+}
+
+std::string Advisor::getName() const {
+    return name;  // Or whatever member variable stores the name
 }
 
 //general funcs

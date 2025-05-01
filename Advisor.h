@@ -10,6 +10,7 @@ private:
 
 public:
     //cnstrct
+    Advisor();
     Advisor(int advisor);
 
     //get
